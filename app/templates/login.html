@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block styles %}
+
+input,select{
+  border-radius:10px !important;
+  padding:10px 0px;
+
+}
+input,select{
+  width:100%;
+}
+label {
+    font-weight:bold;
+}
+.btn{
+    margin-top:20px;
+    width:100%
+}
+.col-md-5{
+  border-radius:20px;
+  background: rgb(212,194,4);
+  background: linear-gradient(90deg, rgba(212,194,4,1) 1%, rgba(210,166,11,1) 100%, rgba(236,162,6,1) 100%);
+}
+
+{% endblock styles %}
+
+{% block body %}
+
+<div class="mt-5 col-md-5 shadow p-4 mx-auto bg-warning">
+    <h2 class="alert bg-dark text-center text-white">Login Account</h2>
+    
+  <form action="/login/" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <hr>
+    <input type="submit" value="Login" class="p-3 btn bg-dark text-white">
+  </form>
+</div>
+
+
+{% endblock body %}

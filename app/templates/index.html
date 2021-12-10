@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% block styles %}
+
+input,select{
+    border-radius:10px !important;
+    padding:10px 0px;
+
+}
+input,select{
+    width:100%;
+}
+label {
+    font-weight:bold;
+}
+.btn{
+    margin-top:20px;
+    width:100%
+}
+.col-md-4{
+    border-radius:20px;
+    background: rgb(212,194,4);
+    background: linear-gradient(90deg, rgba(212,194,4,1) 1%, rgba(210,166,11,1) 100%, rgba(236,162,6,1) 100%);
+}
+@media only screen and (min-width: 500px) {
+    .col {
+      margin-left:20px;
+    }
+  }
+.col{
+    
+    border-radius:20px;
+    background: rgb(212,194,4);
+background: linear-gradient(90deg, rgba(212,194,4,1) 1%, rgba(210,166,11,1) 100%, rgba(236,162,6,1) 100%);
+
+{% endblock styles %}
+{% block body %}
+
+<div class="container">
+
+    <div class="row">
+        <div class="mt-5 col-md-4 shadow p-4 mx-auto ">
+            <h4 class="alert text-white bg-dark text-center">Add New Task</h4>
+            
+          <form action="/add-todo/" method="POST">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <hr>
+            <input type="submit" value="Add" class="p-3 btn bg-dark text-white">
+          </form>
+        </div>
+    
+        <div class="col mt-5 p-4 ">
+            
+            {% if todos|length == 0 %}
+            <div>
+                <h3 class="bg-info text-white p-3 text-center">Please Shedule Your Todays Task</h3>
+            </div>
+
+            {% else %}
+            <table class="table table-dark table-hover">
+                <thead>
+                    <tr>
+                      <th scope="col" class="text-center">S.No</th>
+                      <th scope="col" class="text-center">Title</th>
+                      <th scope="col" class="text-center">Priority</th>
+                      <th scope="col" class="text-center">Status</th>
+                      <th scope="col" class="text-center">Actions</th>
+                      
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for obj in todos %}
+                    
+                    <tr>
+                        <th scope="row" class="text-center">{{forloop.counter}}</th>
+                        <td class="text-center">{{obj.title}}</td>
+                        <td class="text-center">{{obj.priority}}</td>
+                        <td class="text-center">{{obj.status}}</td>
+                        <td class="text-center">
+                            <a href="delete-todo/{{obj.id}}" title="Delete" class=" mt-0">❌ </a>
+                            {% if obj.status == 'P' %}
+                            <a href="change-status/{{obj.id}}/C" title="Mark Complete" class=""> ✅ </a>
+                            {% else %}
+                            <a href="change-status/{{obj.id}}/P" title="Mark Pending" class="">🕒 </a>
+                            {% endif %}
+                        
+                        
+                        </td>
+                        
+                    </tr>
+                    
+                    {% endfor %}
+                    
+                  </tbody>
+              </table>
+
+            {% endif %}
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock body %}
